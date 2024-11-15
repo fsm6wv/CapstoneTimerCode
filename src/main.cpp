@@ -34,7 +34,7 @@ void loop() {
   read_PH_sensor();
   read_DHT_sensor();
   read_WATERLEVEL_sensor();
-  //read_TDS_sensor();
+  read_TDS_sensor();
   print_sensor_values();
   delay(1000);
 }

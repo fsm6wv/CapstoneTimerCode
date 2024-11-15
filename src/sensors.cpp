@@ -36,7 +36,6 @@ Serial.println("Median tds : " + String(getPhValue()) + " (ppm)");
 Serial.println();
 }
 
-
 float read_PH_sensor(){
   float phVoltage = adc3.readVoltage();
   float phValue = (3.5 * phVoltage) - 2.2; // Adjusted so tapwater = pH 7
