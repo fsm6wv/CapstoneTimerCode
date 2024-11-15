@@ -29,10 +29,10 @@ void fill_sensor_buffers(){
 
 void print_sensor_values(){
 Serial.println("Median ph: " + String(getMedian(phBuffer, 10)));
-Serial.println("Median waterLevel: " + String(getMedian(waterlevelBuffer, 10)));
-Serial.println("Median Humidity: " + String(getMedian(dhtHumidityBuffer, 10)) + " %");
-Serial.println("Median Temperature: " + String(getMedian(dhtTemperatureBuffer, 10)) + " degrees C");
-Serial.println("Median tds : " + String(getMedian(phBuffer, 10)) + " (ppm)");
+Serial.println("Median waterLevel: " + String(getWaterlevelValue()));
+Serial.println("Median Humidity: " + String(getDhtHumidityValue()) + " %");
+Serial.println("Median Temperature: " + String(getDhtTemperatureValue()) + " degrees C");
+Serial.println("Median tds : " + String(getPhValue()) + " (ppm)");
 Serial.println();
 }
 
@@ -72,7 +72,7 @@ float read_TDS_sensor(){
   tdsValue *= 0.25; // Calibration adjustment
   tdsBuffer[tdsBufferIndex] = tdsValue;
   tdsBufferIndex = (tdsBufferIndex + 1) % tdsBufferSize;
-  return tdsValue; // units ppm?
+  return tdsValue; //units ppm
 }
 
 float getMedian(float* buffer, int bufferSize) {
@@ -84,3 +84,9 @@ float getMedian(float* buffer, int bufferSize) {
   if (bufferSize % 2 == 0){return (tempBuffer[bufferSize/2 - 1] + tempBuffer[bufferSize/2]) / 2.0f;
   }else{return tempBuffer[bufferSize/2];}
 }
+
+float getPhValue(){return getMedian(phBuffer, phBufferSize);}
+float getTdsValue(){return getMedian(tdsBuffer, tdsBufferSize);}
+float getWaterlevelValue(){return getMedian(waterlevelBuffer, waterlevelBufferSize);}
+float getDhtTemperatureValue(){return getMedian(dhtTemperatureBuffer, dhtTemperatureBufferSize);}
+float getDhtHumidityValue(){return getMedian(dhtHumidityBuffer, dhtHumidityBufferSize);}

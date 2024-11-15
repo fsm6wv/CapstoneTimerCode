@@ -35,6 +35,11 @@ float* read_DHT_sensor();
 float read_WATERLEVEL_sensor();
 float read_TDS_sensor();
 float getMedian(float* buffer, int bufferSize);
+float getPhValue();
+float getTdsValue();
+float getWaterlevelValue();
+float getDhtTemperatureValue();
+float getDhtHumidityValue();
 
 
 #endif
