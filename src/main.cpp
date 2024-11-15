@@ -2,21 +2,24 @@
 #include "timer.h"
 #include "sensors.h"
 
-int dhtBuffer [10];
-int dhtBufferIndex = 0;
-int tdsBuffer [10];
+float dhtHumidityBuffer [dhtHumidityBufferSize];
+int dhtHumidityBufferIndex = 0;
+float dhtTemperatureBuffer [dhtTemperatureBufferSize];
+int dhtTemperatureBufferIndex = 0;
+float tdsBuffer [tdsBufferSize];
 int tdsBufferIndex = 0;
-int phBuffer [10];
+float phBuffer [phBufferSize];
 int phBufferIndex = 0;
-int waterlevelBuffer [10];
+float waterlevelBuffer [waterlevelBufferSize];
 int waterlevelBufferIndex = 0;
 
 void setup() {
   disableCore0WDT();
-  // Serial init
-  Serial.begin(9600);
+  // Serial and sensor init
+  setup_sensors();
   Serial.println();
   Serial.println("Can You Hear Me? (serial started)");
+  fill_sensor_buffers();
   // Pin init
   pinMode(PUMP_PIN, OUTPUT);
   pinMode(LIGHTING_PIN, OUTPUT);
@@ -28,9 +31,10 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("looping");
-  // digitalWrite(LIGHTING_PIN, HIGH);
-  // delay(1000);
-  // digitalWrite(LIGHTING_PIN, LOW);
+  read_PH_sensor();
+  read_DHT_sensor();
+  read_WATERLEVEL_sensor();
+  //read_TDS_sensor();
+  print_sensor_values();
   delay(1000);
 }
