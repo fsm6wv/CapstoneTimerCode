@@ -3,6 +3,8 @@
 
 static int lightState = LOW;
 static int pumpState = LOW;
+static int pumpCounter = 0;
+int pumpCounterEnd = 20; // Change this to alter on/off duty cycle (20 = 5% on)
 
 void IRAM_ATTR timer_group0_isr(void *param) {
     uint32_t int_st_timers = TIMERG0.int_st_timers.val; // Check which timer interrupt occured
@@ -14,8 +16,13 @@ void IRAM_ATTR timer_group0_isr(void *param) {
     }
     if (int_st_timers & TIMG_T1_INT_ST) {
         timer_group_clr_intr_status_in_isr(TIMER_GROUP_0, TIMER_1); // Clear interrupt
-        digitalWrite(PUMP_PIN, (pumpState = !pumpState));
-        //Serial.println("Pump task executed");
+        if (pumpCounter == pumpCounterEnd){
+            digitalWrite(PUMP_PIN, (pumpState = !pumpState));
+            //Serial.println("Pump task executed");
+            pumpCounter = 0;
+        }else if(pumpState == HIGH){
+            digitalWrite(PUMP_PIN, (pumpState = !pumpState));
+        }else{pumpCounter += 1;}
         timer_group_enable_alarm_in_isr(TIMER_GROUP_0, TIMER_1);
     }
 }
