@@ -3,26 +3,27 @@
 
 static int lightState = LOW;
 static int pumpState = LOW;
-static int pumpCounter = 0;
-int pumpCounterEnd = 20; // Change this to alter on/off duty cycle (20 = 5% on)
 
 void IRAM_ATTR timer_group0_isr(void *param) {
     uint32_t int_st_timers = TIMERG0.int_st_timers.val; // Check which timer interrupt occured
     if (int_st_timers & TIMG_T0_INT_ST) {
         timer_group_clr_intr_status_in_isr(TIMER_GROUP_0, TIMER_0); // Clear interrupt
         digitalWrite(LIGHTING_PIN, (lightState = !lightState));
-        //Serial.println("Lighting task executed");
+        if (lightState = LOW){
+            updateTimer(TIMER_1, 10*60*60); // Off duration, set at 10 hrs
+        }else{
+            updateTimer(TIMER_1, 14*60*60); // On duration
+        }
         timer_group_enable_alarm_in_isr(TIMER_GROUP_0, TIMER_0);
     }
     if (int_st_timers & TIMG_T1_INT_ST) {
         timer_group_clr_intr_status_in_isr(TIMER_GROUP_0, TIMER_1); // Clear interrupt
-        if (pumpCounter == pumpCounterEnd){
-            digitalWrite(PUMP_PIN, (pumpState = !pumpState));
-            //Serial.println("Pump task executed");
-            pumpCounter = 0;
-        }else if(pumpState == HIGH){
-            digitalWrite(PUMP_PIN, (pumpState = !pumpState));
-        }else{pumpCounter += 1;}
+        digitalWrite(PUMP_PIN, (pumpState = !pumpState));
+        if (pumpState == LOW){
+            updateTimer(TIMER_1, 10); // Off duration
+        }else{
+            updateTimer(TIMER_1, 5); // On duration
+        }
         timer_group_enable_alarm_in_isr(TIMER_GROUP_0, TIMER_1);
     }
 }
@@ -49,13 +50,13 @@ void setup_timer(timer_idx_t timer_num, int seconds) {
     timer_start(TIMER_GROUP_0, timer_num);
 }
 
-void updateTimer(int minutes) {
+void updateTimer(timer_idx_t timer_num, int seconds) {
   // Ensure minutes > 0 && minutes < 1440
   // Assuming your timer counts in microseconds
-  uint64_t alarmValue = (uint64_t)minutes * 60 * 1000000;
-  timer_pause(TIMER_GROUP_0, TIMER_0);
-  timer_disable_intr(TIMER_GROUP_0, TIMER_0);
-  timer_set_alarm_value(TIMER_GROUP_0, TIMER_0, alarmValue);
-  timer_enable_intr(TIMER_GROUP_0, TIMER_0);
-  timer_start(TIMER_GROUP_0, TIMER_0);
+  uint64_t alarmValue = (uint64_t)seconds * 1000000;
+  timer_pause(TIMER_GROUP_0, timer_num);
+  timer_disable_intr(TIMER_GROUP_0, timer_num);
+  timer_set_alarm_value(TIMER_GROUP_0, timer_num, alarmValue);
+  timer_enable_intr(TIMER_GROUP_0, timer_num);
+  timer_start(TIMER_GROUP_0, timer_num);
 }

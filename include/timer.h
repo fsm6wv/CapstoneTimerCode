@@ -6,5 +6,5 @@
 #define LIGHTING_PIN 8
 
 void setup_timer(timer_idx_t timer_num, int seconds);
-void updateTimer(int minutes);
+void updateTimer(timer_idx_t timer_num, int minutes);
 #endif // TIMER_H

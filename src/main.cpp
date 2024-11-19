@@ -25,8 +25,8 @@ void setup() {
   pinMode(LIGHTING_PIN, OUTPUT);
   Serial.println("Pins initialized");
   // Timer Init
-  setup_timer(TIMER_0, 15); // Lights
-  setup_timer(TIMER_1, 2); // Pump
+  setup_timer(TIMER_0, 10); // Lights
+  setup_timer(TIMER_1, 10); // Pump
 
 }
 
