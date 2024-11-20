@@ -10,9 +10,9 @@ void IRAM_ATTR timer_group0_isr(void *param) {
         timer_group_clr_intr_status_in_isr(TIMER_GROUP_0, TIMER_0); // Clear interrupt
         digitalWrite(LIGHTING_PIN, (lightState = !lightState));
         if (lightState = LOW){
-            updateTimer(TIMER_1, 10*60*60); // Off duration, set at 10 hrs
+            updateTimer(TIMER_0, 10*60*60); // Off duration, set at 10 hrs
         }else{
-            updateTimer(TIMER_1, 14*60*60); // On duration
+            updateTimer(TIMER_0, 14*60*60); // On duration
         }
         timer_group_enable_alarm_in_isr(TIMER_GROUP_0, TIMER_0);
     }
@@ -20,9 +20,11 @@ void IRAM_ATTR timer_group0_isr(void *param) {
         timer_group_clr_intr_status_in_isr(TIMER_GROUP_0, TIMER_1); // Clear interrupt
         digitalWrite(PUMP_PIN, (pumpState = !pumpState));
         if (pumpState == LOW){
-            updateTimer(TIMER_1, 10); // Off duration
+            updateTimer(TIMER_1, 20*60); // Off duration
+        }else if(lightState = HIGH){
+            updateTimer(TIMER_1, 2*60); // On duration when lights are on
         }else{
-            updateTimer(TIMER_1, 5); // On duration
+            updateTimer(TIMER_1, 1*60); // On duration when lights are off
         }
         timer_group_enable_alarm_in_isr(TIMER_GROUP_0, TIMER_1);
     }
