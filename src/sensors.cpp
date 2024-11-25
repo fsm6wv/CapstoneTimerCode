@@ -28,11 +28,11 @@ void fill_sensor_buffers(){
 }
 
 void print_sensor_values(){
-Serial.println("Median ph: " + String(getMedian(phBuffer, 10)));
+Serial.println("Median ph: " + String(getPhValue()));
 Serial.println("Median waterLevel: " + String(getWaterlevelValue()));
 Serial.println("Median Humidity: " + String(getDhtHumidityValue()) + " %");
 Serial.println("Median Temperature: " + String(getDhtTemperatureValue()) + " degrees C");
-Serial.println("Median tds : " + String(getPhValue()) + " (ppm)");
+Serial.println("Median tds : " + String(getTdsValue()) + " (ppm)");
 Serial.println();
 }
 

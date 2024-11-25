@@ -27,6 +27,7 @@ void setup() {
   // Pin init
   pinMode(PUMP_PIN, OUTPUT);
   pinMode(LIGHTING_PIN, OUTPUT);
+  pinMode(FAN_PIN, OUTPUT);
   Serial.println("Pins initialized");
   // Timer Init
   setup_timer(TIMER_0, 20); // Lights
