@@ -1,18 +1,22 @@
 #include "screen.h"
 #include "sensors.h"
 
-
+TFT_eSPI tft = TFT_eSPI();
 void init_screen(){
   //XPT2046_Touchscreen touch(40); // T_CS pin
-  TFT_eSPI tft = TFT_eSPI();
   tft.begin();
-  resetTFT();
+  delay(150); 
   tft.setRotation(0); // Adjust rotation if needed
   tft.fillScreen(TFT_RED);
-  tft.setTextColor(TFT_WHITE, TFT_BLACK);
+  //tft.setFreeFont();
+  tft.setTextColor(TFT_BLACK, TFT_WHITE);
   char fullString[20];
-  sprintf(fullString, "Hello %.2f", 1.1); // getPhValue()
-  tft.drawString("whyyyy", 0, 0, 2);
+  sprintf(fullString, "Sample floar data: %.2f", getTdsValue());
+  tft.drawString("Welcome to the plant", 0, 0, 4);
+  tft.drawString("selection menu!", 0, 20, 4);
+  tft.drawString(fullString, 0, 80, 4);
+
+
 //   if (touch.begin()) {
 //     Serial.println("Touchscreen initialized");
 //   }
