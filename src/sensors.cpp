@@ -5,9 +5,6 @@ ESP32AnalogRead adc1;     // For TDS sensor
 ESP32AnalogRead adc2;     // For Water level sensor
 ESP32AnalogRead adc3;     // For pH sensor
 
-const int SCOUNT = 10; // Sum of sample points for median filter
-int analogBuffer[SCOUNT]; // Buffer for TDS sensor readings
-int analogBufferIndex = 0;
 float temperature = 25.0; // Initial temperature for TDS compensation
 
 void setup_sensors() {
@@ -28,11 +25,11 @@ void fill_sensor_buffers(){
 }
 
 void print_sensor_values(){
-Serial.println("Median ph: " + String(getMedian(phBuffer, 10)));
+Serial.println("Median ph: " + String(getPhValue()));
 Serial.println("Median waterLevel: " + String(getWaterlevelValue()));
 Serial.println("Median Humidity: " + String(getDhtHumidityValue()) + " %");
 Serial.println("Median Temperature: " + String(getDhtTemperatureValue()) + " degrees C");
-Serial.println("Median tds : " + String(getPhValue()) + " (ppm)");
+Serial.println("Median tds : " + String(getTdsValue()) + " (ppm)");
 Serial.println();
 }
 

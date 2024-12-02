@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "timer.h"
 #include "sensors.h"
+#include "screen.h"
 
 float dhtHumidityBuffer [dhtHumidityBufferSize];
 int dhtHumidityBufferIndex = 0;
@@ -27,7 +28,9 @@ void setup() {
   // Pin init
   pinMode(PUMP_PIN, OUTPUT);
   pinMode(LIGHTING_PIN, OUTPUT);
+  pinMode(FAN_PIN, OUTPUT);
   Serial.println("Pins initialized");
+  init_screen();
   // Timer Init
   setup_timer(TIMER_0, 20); // Lights
   setup_timer(TIMER_1, 20); // Pump
