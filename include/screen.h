@@ -4,6 +4,7 @@
 #include <XPT2046_Touchscreen.h>
 
 void init_screen();
+void resetTFT();
 
 
 

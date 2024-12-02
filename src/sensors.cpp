@@ -5,9 +5,6 @@ ESP32AnalogRead adc1;     // For TDS sensor
 ESP32AnalogRead adc2;     // For Water level sensor
 ESP32AnalogRead adc3;     // For pH sensor
 
-const int SCOUNT = 10; // Sum of sample points for median filter
-int analogBuffer[SCOUNT]; // Buffer for TDS sensor readings
-int analogBufferIndex = 0;
 float temperature = 25.0; // Initial temperature for TDS compensation
 
 void setup_sensors() {
