@@ -20,7 +20,6 @@ void IRAM_ATTR timer_group0_isr(void *param) {
     if (int_st_timers & TIMG_T1_INT_ST) {
         timer_group_clr_intr_status_in_isr(TIMER_GROUP_0, TIMER_1); // Clear interrupt
         digitalWrite(PUMP_PIN, (pumpState = !pumpState));
-        //digitalWrite(FAN_PIN, pumpState);
         if (pumpState == LOW){
             updateTimer(TIMER_1, 20*60); // Off duration
         }else if(lightState = HIGH){

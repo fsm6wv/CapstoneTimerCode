@@ -4,11 +4,11 @@
 #include "DHT.h"
 #include <ESP32AnalogRead.h>
 
-#define DHT_PIN 2
+#define DHT_PIN 9
 #define DHT_TYPE DHT11  // Sensor type
-#define TDS_PIN 3
-#define WATERLEVEL_PIN 4
-#define PH_PIN 5
+#define TDS_PIN 10
+#define WATERLEVEL_PIN 11
+#define PH_PIN 12
 
 #define dhtHumidityBufferSize 9
 #define dhtTemperatureBufferSize 9
