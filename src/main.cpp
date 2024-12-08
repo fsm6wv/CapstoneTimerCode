@@ -2,6 +2,7 @@
 #include "timer.h"
 #include "sensors.h"
 #include "screen.h"
+#include "profiles.h"
 
 float dhtHumidityBuffer [dhtHumidityBufferSize];
 int dhtHumidityBufferIndex = 0;
@@ -40,31 +41,31 @@ void setup() {
   startTime = millis();
 }
 
-void loop() {
-  read_PH_sensor();
-  read_DHT_sensor();
-  read_WATERLEVEL_sensor();
-  read_TDS_sensor();
-  print_sensor_values();
-  delay(1000);
-  print_elapsed_time();
-  refresh_screen();
-}
-
-// void loop() { // touch test code 1
-//   uint16_t x = 0, y = 0; // To store the touch coordinates
-//   // Pressed will be set true is there is a valid touch on the screen
-//   bool pressed = tft.getTouch(&x, &y);
-
-//   // Draw a white spot at the detected coordinates
-//   if (pressed) {
-//     tft.fillCircle(x, y, 2, TFT_WHITE);
-//     //Serial.print("x,y = ");
-//     //Serial.print(x);
-//     //Serial.print(",");
-//     //Serial.println(y);
-//   }
+// void loop() {
+//   read_PH_sensor();
+//   read_DHT_sensor();
+//   read_WATERLEVEL_sensor();
+//   read_TDS_sensor();
+//   print_sensor_values();
+//   delay(1000);
+//   print_elapsed_time();
+//   refresh_screen();
 // }
+
+void loop() { // touch test code 1
+  uint16_t x = 0, y = 0; // To store the touch coordinates
+  // Pressed will be set true is there is a valid touch on the screen
+  bool pressed = tft.getTouch(&x, &y);
+
+  // Draw a white spot at the detected coordinates
+  if (pressed) {
+    tft.fillCircle(x, y, 2, TFT_WHITE);
+    //Serial.print("x,y = ");
+    //Serial.print(x);
+    //Serial.print(",");
+    //Serial.println(y);
+  }
+}
 
 // void loop() { // touch test code 2
 //   uint16_t x, y;
